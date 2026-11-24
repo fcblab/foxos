@@ -1,0 +1,43 @@
+{
+  "providerInstances": {
+    "acpRegistry_oh_my_pi": {
+      "driver": "acpRegistry",
+      "displayName": "Oh My Pi",
+      "enabled": true,
+      "config": {
+        "source": "local",
+        "commandArgs": [
+          "acp"
+        ],
+        "commandPath": "omp"
+      }
+    }
+  },
+  "addProjectBaseDirectory": "~/.t3/projects",
+  "defaultModelSelection": {
+    "instanceId": "codex",
+    "model": "",
+    "options": [
+      {
+        "id": "reasoningEffort",
+        "value": ""
+      },
+      {
+        "id": "serviceTier",
+        "value": "default"
+      }
+    ]
+  },
+  "fallbackModelSelection": {
+    "instanceId": "claudeAgent",
+    "model": ""
+  },
+  "defaultRuntimeMode": "auto",
+  "defaultAutoPull": true,
+  "removeAgentCreditsOnMerge": true,
+  "branchNamingMode": "semantic",
+  "storageCleanup": {
+    "worktreeOnMerge": true,
+    "worktreeOnDelete": true
+  }
+}

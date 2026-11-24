@@ -1,0 +1,7 @@
+providers:
+  custom:
+    baseUrl: ""
+    apiKey: ""
+    api: openai-responses
+    discovery:
+      type: openai-models-list

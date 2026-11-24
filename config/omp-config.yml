@@ -1,0 +1,19 @@
+setupVersion: 3
+modelRoles:
+  default: ""
+defaultThinkingLevel: ""
+enabledProviders:
+  - codex
+disabledExtensions:
+  - skill:agents/cavecrew
+  - skill:agents/caveman-compress
+  - skill:agents/caveman-stats
+symbolPreset: unicode
+composer:
+  shape: band
+theme:
+  dark: titanium
+update:
+  auto: false
+telemetry:
+  otlpExportEnabled: false

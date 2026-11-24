@@ -1,0 +1,51 @@
+services:
+  coding-agent:
+    image: ghcr.io/fcblab/foxos:latest
+    container_name: coding-agent
+    restart: unless-stopped
+    init: true
+    stdin_open: true
+    tty: true
+    security_opt:
+      - seccomp:unconfined
+    environment:
+      # ---------------- Codex ----------------
+      CODEX_BASE_URL: https://api.openai.com/v1
+      CODEX_AUTH_TOKEN: xxx
+      # gpt-6-luna gpt-6.1-terra gpt-6.2-sol gpt-6.2-astra
+      CODEX_MODEL: gpt-6.2-sol
+      # none minimal low medium high xhigh max ultra
+      CODEX_THINKING_LEVEL: medium
+      # ---------------- Claude Code ----------------
+      CC_BASE_URL: https://api.anthropic.com
+      CC_AUTH_TOKEN: xxx
+      # opus sonnet haiku opusplan [1m]
+      CC_MODEL: claude-opus-5-5[1m]
+      # low medium high xhigh
+      CC_THINKING_LEVEL: medium
+      # ENABLE_PROMPT_CACHING_1H: 1
+      # CLAUDE_CODE_ATTRIBUTION_HEADER: 0
+      # CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS: 1
+      # ---------------- Search ----------------
+      CONTEXT7_API_KEY: xxx
+      EXA_API_KEY: xxx
+      # ---------------- T3 Code ----------------
+      T3CODE_HOST: 100.90.7.6
+    volumes:
+      # ---------------- Codex ----------------
+      - ./codex-data/sessions:/root/.codex/sessions
+      - ./codex-data/archived_sessions:/root/.codex/archived_sessions
+      # ---------------- Claude Code ----------------
+      - ./claude-data/projects:/root/.claude/projects
+      - ./claude-data/file-history:/root/.claude/file-history
+      - ./claude-data/plans:/root/.claude/plans
+      - ./claude-data/tasks:/root/.claude/tasks
+      - ./claude-data/agent-memory:/root/.claude/agent-memory
+      # ---------------- Oh My Pi ----------------
+      - ./omp-data/agent/sessions:/root/.omp/agent/sessions
+      - ./omp-data/agent/blobs:/root/.omp/agent/blobs
+      # ---------------- T3 Code ----------------
+      - ./t3-data:/root/.t3/userdata
+      - ./workspace:/root/.t3/projects
+      - ./worktrees:/root/.t3/worktrees
+    network_mode: host
