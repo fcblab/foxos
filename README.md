@@ -12,6 +12,10 @@ An Arch Linux container for AI-assisted development with Codex, Claude Code, Oh 
 
 The base image is `archlinux:base-devel`, and the default time zone is `America/Los_Angeles`. The build commands target `linux/amd64`; the JDK download also targets x86_64.
 
+Java and Rust are installed at container startup by `env/java.sh` and `env/rust.sh`, before agent configuration and T3 Code. The first start requires network access and waits for both installations. Successful installations are marked and skipped on subsequent starts; installation failures stop startup. These toolchains are not bind-mounted by Compose, so recreating the container installs them again.
+
+Set `AUTO_INSTALL_JAVA=false` or `AUTO_INSTALL_RUST=false` to disable automatic installation of that toolchain. Both default to `true`; only the exact value `true` enables installation. Disabling installation does not remove an already installed toolchain.
+
 ## Quick start
 
 Use a Linux host with Docker Engine and the Docker Compose plugin. The current configuration uses host networking. Local builds also require Docker Buildx with BuildKit support.
@@ -74,6 +78,8 @@ Set these values under `environment` in `compose.yaml`:
 | `CC_THINKING_LEVEL` | `medium` | Claude Code model thinking level |
 | `CONTEXT7_API_KEY` | `xxx` in Compose | Context7 credential |
 | `EXA_API_KEY` | `xxx` in Compose | Exa credential |
+| `AUTO_INSTALL_JAVA` | `true` | Automatically installs Liberica JDK 25 at startup only when set to `true` |
+| `AUTO_INSTALL_RUST` | `true` | Automatically installs Rust and its components at startup only when set to `true` |
 | `START_T3CODE` | `true` | Starts T3 Code automatically only when set to `true` |
 | `T3CODE_HOST` | `0.0.0.0` in the image; overridden to `100.90.7.6` in Compose | T3 Code listening address |
 | `T3CODE_PORT` | `3773` | T3 Code listening port |
@@ -155,7 +161,8 @@ docker compose down
 ├── compose.yaml            # Service, environment, networking, and data mounts
 ├── config/                 # Agent configuration templates installed at build time
 ├── config.sh               # Writes environment variables into configuration at startup
-└── docker-entrypoint.sh    # Applies configuration, starts T3, and runs the container command
+├── env/                    # Java and Rust installers run at startup
+└── docker-entrypoint.sh    # Installs toolchains, applies configuration, starts T3, and runs the container command
 ```
 
 ## Security notes

@@ -24,23 +24,6 @@ RUN --mount=type=cache,target=/var/cache/pacman/pkg,sharing=locked \
 # Configure timezone
 RUN ln -snf "/usr/share/zoneinfo/${TZ}" /etc/localtime
 
-# Install Rust and rust-analyzer with rustup
-RUN curl --proto '=https' --tlsv1.2 -fsSL https://sh.rustup.rs \
-        | sh -s -- -y --no-modify-path --default-toolchain stable \
-            --profile minimal --component rustfmt,clippy,rust-analyzer,rust-src \
-    && rustc --version \
-    && cargo --version \
-    && rust-analyzer --version
-
-# Install JDK
-# https://bell-sw.com/pages/downloads/?version=java-25
-RUN mkdir -p "${JAVA_HOME}" \
-    && JAVA_URL=$(curl -fsSL 'https://api.bell-sw.com/v1/liberica/releases?version-feature=25&version-modifier=latest&os=linux&arch=x86&bitness=64&package-type=tar.gz&bundle-type=jdk&fields=downloadUrl,version' \
-        | jq -er 'max_by(.version | gsub("\\+"; ".") | split(".") | map(tonumber)).downloadUrl') \
-    && curl -fsSL "${JAVA_URL}" | tar -xz --strip-components=1 -C "${JAVA_HOME}" \
-    && java -version \
-    && javac -version
-
 # ---------------- AI Agent ----------------
 
 ENV DO_NOT_TRACK=1 \
@@ -139,6 +122,7 @@ RUN --mount=type=cache,target=/root/.cache/uv \
 
 # Entrypoint
 COPY --chmod=755 config.sh /usr/local/bin/foxos-config.sh
+COPY --chmod=755 env/ /usr/local/bin/env/
 COPY --chmod=755 docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 
 EXPOSE 3773

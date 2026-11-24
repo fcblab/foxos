@@ -1,6 +1,13 @@
 #!/bin/bash
 set -e
 
+if [ "${AUTO_INSTALL_JAVA:-true}" = "true" ]; then
+    "$(dirname "$0")/env/java.sh"
+fi
+if [ "${AUTO_INSTALL_RUST:-true}" = "true" ]; then
+    "$(dirname "$0")/env/rust.sh"
+fi
+
 "$(dirname "$0")/foxos-config.sh"
 
 # Start T3 Code after applying the current environment.

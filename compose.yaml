@@ -9,6 +9,9 @@ services:
     security_opt:
       - seccomp:unconfined
     environment:
+      # ---------------- Toolchains ----------------
+      AUTO_INSTALL_JAVA: "true"
+      AUTO_INSTALL_RUST: "true"
       # ---------------- Codex ----------------
       CODEX_BASE_URL: https://api.openai.com/v1
       CODEX_AUTH_TOKEN: xxx
