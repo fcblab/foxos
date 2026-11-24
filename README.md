@@ -35,7 +35,7 @@ docker compose up -d
 docker logs -f coding-agent
 ```
 
-Compose uses `ghcr.io/fcblab/foxos:latest`; it does not automatically build the local Dockerfile.
+Compose uses `ghcr.io/fcblab/fos:latest`; it does not automatically build the local Dockerfile.
 
 T3 Code starts with the container by default and listens on port `3773`. Generate a pairing link in another terminal:
 
@@ -105,17 +105,17 @@ Templates in `config` are installed when the image is built, not mounted at runt
 Build and load a local image without pushing it:
 
 ```bash
-docker buildx build --platform linux/amd64 -t ghcr.io/fcblab/foxos:latest --load .
+docker buildx build --platform linux/amd64 -t ghcr.io/fcblab/fos:latest --load .
 docker compose up -d --force-recreate
 ```
 
 Build without cache and push the image:
 
 ```bash
-docker buildx build --platform linux/amd64 -t ghcr.io/fcblab/foxos:latest --no-cache --push .
+docker buildx build --platform linux/amd64 -t ghcr.io/fcblab/fos:latest --no-cache --push .
 ```
 
-Pushing requires authentication and write access to `ghcr.io/fcblab/foxos`. To publish your own image, change both the build tag and the image name in `compose.yaml`.
+Pushing requires authentication and write access to `ghcr.io/fcblab/fos`. To publish your own image, change both the build tag and the image name in `compose.yaml`.
 
 Pull the remote image and recreate the container:
 

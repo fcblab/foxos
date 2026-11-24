@@ -1,6 +1,6 @@
 services:
   coding-agent:
-    image: ghcr.io/fcblab/foxos:latest
+    image: ghcr.io/fcblab/fos:latest
     container_name: coding-agent
     restart: unless-stopped
     init: true
