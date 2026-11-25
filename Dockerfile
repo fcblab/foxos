@@ -18,7 +18,7 @@ RUN --mount=type=cache,target=/var/cache/pacman/pkg,sharing=locked \
         jq go-yq ripgrep fd tree \
         openssh \
         python python-pip uv \
-        nodejs npm \
+        nodejs npm pnpm \
         go
 
 # Configure timezone
@@ -38,7 +38,6 @@ ENV DO_NOT_TRACK=1 \
     CTX7_TELEMETRY_DISABLED=1 \
     RTK_TELEMETRY_DISABLED=1 \
     CAVEMAN_TELEMETRY=0 \
-    CODEGRAPH_TELEMETRY=0 \
     SERENA_USAGE_REPORTING=false
 
 # Install Codex
